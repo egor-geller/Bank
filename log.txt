@@ -1,0 +1,11 @@
+New account 16697 has been created
+New account 16809 has been created
+New account 25288 has been created
+New account 77448 has been created
+New account 52910 has been created
+New account 82164 has been created
+deposit: Account 25288 balance has been updated, balance is 197.48000000000002$
+deposit: Account 25288 balance has been updated, balance is 197.48000000000002$
+deposit: Account 25288 balance has been updated, balance is 147.98$
+withdraw: Account 25288 balance has been updated, balance is 194.98$
+withdraw: Account 25288 balance has been updated, balance is 100.97999999999999$
