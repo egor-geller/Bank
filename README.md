@@ -1,6 +1,6 @@
 # Bank account management assignment
 
-You must implement a Python program (which will run by calling a single script) 
+Implement a Python program (which will run by calling a single script) 
 in which you will implement the management of a single bank account 
 with the following actions (by INPUT from the user)
 
