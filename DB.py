@@ -70,13 +70,31 @@ def read_account(account_id: int) -> AccountDto:
 
 
 def save_balance(account):
-    r = csv.reader(open(ACCOUNTS_CSV, 'r'))
-    lines = list(r)
+    if not is_account_exists(account):
+        print(f'Account {account} does not exists')
+        return
+    with open(ACCOUNTS_CSV, 'r') as fr:
+        r = csv.reader(fr)
+        lines = list(r)
 
-    for line in lines:
-        if line[0] == account.get_account_id():
-            line[5] = round(account.get_balance(), 2)
-            break
+        for line in lines:
+            if line[0] == account.get_account_id():
+                line[5] = round(account.get_balance(), 2)
+                break
 
-    writer = csv.writer(open(ACCOUNTS_CSV, 'w'))
-    writer.writerows(lines)
+    with open(ACCOUNTS_CSV, 'w') as fw:
+        writer = csv.writer(fw)
+        writer.writerows(lines)
+
+
+def read_all_accounts() -> []:
+    all_accounts = []
+    with open(ACCOUNTS_CSV, 'r') as f:
+        csv_file = csv.reader(f)
+
+        for lines in csv_file:
+            if lines[0] == 'AccountID':
+                continue
+            acc = AccountDto(lines[0], lines[1], lines[2], lines[3], lines[4], lines[5])
+            all_accounts.append(acc)
+    return all_accounts
