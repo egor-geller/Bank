@@ -13,12 +13,14 @@ def save_account(account: Account) -> None:
     if is_account_exists(account.get_account_num()):
         raise AccountExistsError(f'Account {account.get_account_num()} already exists')
 
-    with open(ACCOUNTS_CSV, 'w') as f:
+    with open(ACCOUNTS_CSV, 'a') as f:
+
         # creating a csv writer object
         csvwriter = csv.writer(f)
 
         # writing the fields
-        csvwriter.writerow(columns)
+        if not has_first_row():
+            csvwriter.writerow(columns)
 
         rows = [[account.get_account_num(),
                  account.get_name(),
@@ -29,6 +31,17 @@ def save_account(account: Account) -> None:
 
         # writing the data rows
         csvwriter.writerows(rows)
+
+
+def has_first_row():
+    with open(ACCOUNTS_CSV, 'r') as f:
+        csvreader = csv.reader(f)
+
+        for row in csvreader:
+            if row[0] == 'AccountID':
+                return True
+            else:
+                return False
 
 
 def is_account_exists(account_id: int) -> bool:
