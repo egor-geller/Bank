@@ -1,10 +1,50 @@
+import random
+
 from log import save_to_log
 from DB import read_account, save_balance, save_account
 from account import Account
 from utils import *
+import names
+import random as rd
 
 
 def open_bank_account() -> None:
+    num = ""
+    while num != 0:
+        print("1. Generate X random accounts")
+        print("2. Enter manually 1 account")
+        print("To go back press 0")
+        try:
+            num = int(input("Enter a number: "))
+            if num == 1:
+                generate_accounts()
+            if num == 2:
+                manual_open_bank_account()
+        except ValueError:
+            print(f'ValueError: The input is not a number\n')
+            continue
+
+
+def generate_accounts():
+    try:
+        number_of_accounts = int(input("How many accounts to generate? "))
+        for i in range(number_of_accounts):
+            if i < number_of_accounts // 2:
+                gender = 'male'
+            else:
+                gender = 'female'
+            name = names.get_first_name(gender=gender)
+            age = rd.randint(16, 121)
+            social_num = rd.randint(100_000, 99_999_999)
+            new_account = Account(name, age, gender, social_num)
+            save_account(new_account)
+            print(new_account)
+        print(f"Finish Generating {number_of_accounts} random accounts")
+    except ValueError:
+        print(f'ValueError: The input is not a number\n')
+
+
+def manual_open_bank_account():
     try:
         name = input("Enter person's name (only alphabetic chars): ")
         age = int(input("Enter person's age ( 16 < age < 120 ): "))
