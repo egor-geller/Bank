@@ -51,8 +51,8 @@ def start_point():
             except ValueError:
                 print(f'ValueError: The input is not a number\n')
                 continue
-        # elif num == 6:
-        #     statistics()
+        elif num == 6:
+            statistics()
 
 
 if __name__ == '__main__':
