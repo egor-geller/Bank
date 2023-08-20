@@ -1,11 +1,10 @@
-import random
-
-from log import save_to_log
-from DB import read_account, save_balance, save_account
-from account import Account
-from utils import *
 import names
 import random as rd
+
+from log import save_to_log
+from DB import *
+from account import Account
+from utils import *
 
 
 def open_bank_account() -> None:
@@ -88,3 +87,23 @@ def withdraw(from_account_id: int, amount: float) -> None:
 def get_current_balance(account_id: int) -> float:
     acc = read_account(account_id)
     return float(acc.get_balance())
+
+
+def statistics():
+    num = ""
+    while num != 0:
+        print("1. How much money is in the Bank")
+        print("To go back press 0")
+        try:
+            num = int(input("Enter a number: "))
+            if num == 1:
+                current_money_in_bank()
+        except ValueError:
+            print(f'ValueError: The input is not a number\n')
+            continue
+
+
+def current_money_in_bank():
+    all_accounts = read_all_accounts()
+    money_in_the_bank = sum([float(m.get_balance()) for m in all_accounts])
+    print(f"{money_in_the_bank:,.2f}$")
