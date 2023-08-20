@@ -33,7 +33,7 @@ def save_account(account: Account) -> None:
         csvwriter.writerows(rows)
 
 
-def has_first_row():
+def has_first_row() -> bool:
     with open(ACCOUNTS_CSV, 'r') as f:
         csvreader = csv.reader(f)
 
