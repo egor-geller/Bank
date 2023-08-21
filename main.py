@@ -1,4 +1,3 @@
-from log import read_lines
 from bank import *
 
 
@@ -9,49 +8,30 @@ def start_point():
         print("2. How much money left")
         print("3. Deposit a sum of money")
         print("4. Cash withdrawal")
-        print("5. Last 10 moves done by the account")
-        print("6. Statistics")
+        print("5. Transfer money")
+        print("6. Last 10 moves in the bank")
+        print("7. Statistics")
         print("To exit press 0")
-        num = int(input("Enter a number: "))
+        try:
+            num = int(input("Enter a number: "))
+        except ValueError:
+            print("You have entered an incorrect number")
+            print("\n")
+            continue
         print("\n")
         if num == 1:
             open_bank_account()
-            print("\n")
         elif num == 2:
-            try:
-                acc = int(input("Enter an account number to check the balance: "))
-                print(get_current_balance(acc))
-                print("\n")
-            except ValueError:
-                print(f'ValueError: The input is not a number\n')
-                continue
+            get_balance()
         elif num == 3:
-            try:
-                acc = int(input("Enter an account number: "))
-                amount = float(input("Enter amount money to deposit: "))
-                deposit(acc, amount)
-                print("\n")
-            except ValueError:
-                print(f'ValueError: The input is not a number\n')
-                continue
+            deposit_amount()
         elif num == 4:
-            try:
-                acc = int(input("Enter an account number: "))
-                amount = float(input("Enter amount money to withdraw: "))
-                withdraw(acc, amount)
-                print("\n")
-            except ValueError:
-                print(f'ValueError: The input is not a number\n')
-                continue
+            cash_withdraw()
         elif num == 5:
-            try:
-                num_of_lines = int(input("Enter number of lines to read from log: "))
-                read_lines(num_of_lines)
-                print("\n")
-            except ValueError:
-                print(f'ValueError: The input is not a number\n')
-                continue
+            transfer_between_accounts()
         elif num == 6:
+            moves_in_bank()
+        elif num == 7:
             statistics()
 
 
