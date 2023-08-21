@@ -1,7 +1,7 @@
 import names
 import random as rd
 
-from log import save_to_log
+from log import save_to_log, read_lines
 from DB import *
 from account import Account
 from utils import *
@@ -84,6 +84,15 @@ def withdraw(from_account_id: int, amount: float) -> None:
     save_to_log(f"withdraw: Account {acc.get_account_id()} balance has been updated, balance is {acc.get_balance()}$")
 
 
+def transfer_money(acc_from: int, acc_to: int, amount: float) -> None:
+    # Take money from account 1
+    withdraw(acc_from, amount)
+
+    # Transfer money from account 1 to account 2
+    deposit(acc_to, amount)
+    save_to_log(f"transfer_money: Account {acc_from} has transferred to account {acc_to} : {amount:.2f}$")
+
+
 def get_current_balance(account_id: int) -> float:
     acc = read_account(account_id)
     return float(acc.get_balance())
@@ -107,3 +116,52 @@ def current_money_in_bank():
     all_accounts = read_all_accounts()
     money_in_the_bank = sum([float(m.get_balance()) for m in all_accounts])
     print(f"{money_in_the_bank:,.2f}$")
+
+
+def cash_withdraw():
+    try:
+        acc = int(input("Enter an account number: "))
+        amount = float(input("Enter amount money to withdraw: "))
+        withdraw(acc, amount)
+        print("\n")
+    except ValueError:
+        print(f'ValueError: The input is not a number\n')
+
+
+def transfer_between_accounts():
+    try:
+        acc_from = int(input("Enter from which account number transfer: "))
+        acc_to = int(input("Enter to which account number transfer to: "))
+        amount = float(input("Enter the amount money to transfer: "))
+        transfer_money(acc_from, acc_to, amount)
+        print("\n")
+    except ValueError:
+        print(f'ValueError: The input is not a number\n')
+
+
+def get_balance():
+    try:
+        acc = int(input("Enter an account number to check the balance: "))
+        print(get_current_balance(acc))
+        print("\n")
+    except ValueError:
+        print(f'ValueError: The input is not a number\n')
+
+
+def deposit_amount():
+    try:
+        acc = int(input("Enter an account number: "))
+        amount = float(input("Enter amount money to deposit: "))
+        deposit(acc, amount)
+        print("\n")
+    except ValueError:
+        print(f'ValueError: The input is not a number\n')
+
+
+def moves_in_bank():
+    try:
+        num_of_lines = int(input("Enter number of lines to read from log: "))
+        read_lines(num_of_lines)
+        print("\n")
+    except ValueError:
+        print(f'ValueError: The input is not a number\n')
