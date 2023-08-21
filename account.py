@@ -17,5 +17,8 @@ class Account(User):
     def get_account_num(self):
         return self.__account_num
 
+    def set_account_num(self, account_num):
+        self.__account_num = account_num
+
     def __str__(self):
         return super().__str__() + f"\nBalance is: {self.__balance}$"
