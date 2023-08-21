@@ -5,7 +5,7 @@ def start_point():
     num = ""
     while num != 0:
         print("1. Open new bank account")
-        print("2. How much money left")
+        print("2. Account details")
         print("3. Deposit a sum of money")
         print("4. Cash withdrawal")
         print("5. Transfer money")
@@ -22,7 +22,7 @@ def start_point():
         if num == 1:
             open_bank_account()
         elif num == 2:
-            get_balance()
+            get_account_details()
         elif num == 3:
             deposit_amount()
         elif num == 4:
