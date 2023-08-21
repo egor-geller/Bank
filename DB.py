@@ -98,3 +98,5 @@ def read_all_accounts() -> []:
             acc = AccountDto(lines[0], lines[1], lines[2], lines[3], lines[4], lines[5])
             all_accounts.append(acc)
     return all_accounts
+
+# TODO: delete account
