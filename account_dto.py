@@ -30,8 +30,8 @@ class AccountDto:
         self.__balance = balance
 
     def __str__(self):
-        return f'Account id {self.__account_id}\n' \
-               f'Name {self.__name}\n' \
-               f'Gender {self.__gender}\n' \
-               f'Social Number {self.__social_num}\n' \
-               f'Balance {self.__balance}\n'
+        return f'Account id: {self.__account_id}\n' \
+               f'Name: {self.__name}\n' \
+               f'Gender: {self.__gender}\n' \
+               f'Social Number: {self.__social_num}\n' \
+               f'Balance: {self.__balance}\n'
