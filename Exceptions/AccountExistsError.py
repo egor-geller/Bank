@@ -1,6 +1,6 @@
 class AccountExistsError(Exception):
 
-    def __init__(self, message, error=None):
+    def __init__(self, error=None, message=None):
         super().__init__(message)
         self.error = error
 

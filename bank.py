@@ -41,6 +41,8 @@ def generate_accounts():
         print(f"Finish Generating {number_of_accounts} random accounts")
     except ValueError:
         print(f'ValueError: The input is not a number\n')
+    except AccountExistsError as e:
+        print(e)
 
 
 def manual_open_bank_account():
@@ -57,6 +59,8 @@ def manual_open_bank_account():
         print(new_account)
     except ValueError:
         print(f'ValueError: The input is not a number for age or social number\n')
+    except AccountExistsError as e:
+        print(e)
 
 
 def deposit(to_account_id: int, amount: float) -> None:
@@ -165,3 +169,19 @@ def moves_in_bank():
         print("\n")
     except ValueError:
         print(f'ValueError: The input is not a number\n')
+
+
+def get_account_details():
+    try:
+        acc = int(input("Enter an account number: "))
+        print(account_details(acc))
+        print("\n")
+    except ValueError:
+        print(f'ValueError: The input is not a number\n')
+
+
+def account_details(acc_id: int) -> AccountDto:
+    try:
+        return read_account(acc_id)
+    except AccountNotExistsError as e:
+        print(e)
