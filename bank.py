@@ -185,3 +185,12 @@ def account_details(acc_id: int) -> AccountDto:
         return read_account(acc_id)
     except AccountNotExistsError as e:
         print(e)
+
+
+def delete_acc() -> None:
+    try:
+        acc = int(input("Enter an account number: "))
+        delete_account(acc)
+        print("\n")
+    except ValueError:
+        print(f'ValueError: The input is not a number\n')

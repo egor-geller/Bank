@@ -12,6 +12,7 @@ def start_point():
             print("5. Transfer money")
             print("6. Last 10 moves in the bank")
             print("7. Statistics")
+            print("8. Delete an account")
             print("To exit press 0")
             try:
                 num = int(input("Enter a number: "))
@@ -34,6 +35,8 @@ def start_point():
                 moves_in_bank()
             elif num == 7:
                 statistics()
+            elif num == 8:
+                delete_acc()
     except KeyboardInterrupt:
         print("\n")
         choice = input("Do you wish to exit? [Y/N]\n>> ")

@@ -6,10 +6,10 @@ from account import Account
 from account_dto import AccountDto
 
 ACCOUNTS_CSV = 'accounts.csv'
+COLUMNS = ['AccountID', 'Name', 'Age', 'Gender', 'SocialNum', 'Balance']
 
 
 def save_account(account: Account) -> None:
-    columns = ['AccountID', 'Name', 'Age', 'Gender', 'SocialNum', 'Balance']
     if is_account_exists(account.get_account_num()):
         raise AccountExistsError(f'Account {account.get_account_num()} already exists')
 
@@ -20,7 +20,7 @@ def save_account(account: Account) -> None:
 
         # writing the fields
         if not has_first_row():
-            csvwriter.writerow(columns)
+            csvwriter.writerow(COLUMNS)
 
         rows = [[account.get_account_num(),
                  account.get_name(),
@@ -66,7 +66,7 @@ def read_account(account_id: int) -> AccountDto:
             if lines[0] == 'AccountID':
                 continue
             if int(lines[0]) == account_id:
-                return AccountDto(lines[0], lines[1], lines[2], lines[3], lines[4], lines[5])
+                return AccountDto(int(lines[0]), lines[1], int(lines[2]), lines[3], int(lines[4]), float(lines[5]))
 
 
 def save_balance(account):
@@ -95,8 +95,30 @@ def read_all_accounts() -> []:
         for lines in csv_file:
             if lines[0] == 'AccountID':
                 continue
-            acc = AccountDto(lines[0], lines[1], lines[2], lines[3], lines[4], lines[5])
+            acc = AccountDto(int(lines[0]), lines[1], int(lines[2]), lines[3], int(lines[4]), float(lines[5]))
             all_accounts.append(acc)
     return all_accounts
 
-# TODO: delete account
+
+def delete_account(acc_id: int) -> None:
+    if not is_account_exists(acc_id):
+        print(f'Account with id {acc_id} does not exists')
+        return
+    print("Acc ID: ", acc_id)
+    all_acc = read_all_accounts()
+    new_acc = []
+    for acc in all_acc:
+        if acc.get_account_id() != acc_id:
+            print("Acc ID all: ", acc.get_account_id())
+            row = [acc.get_account_id(),
+                   acc.get_name(),
+                   acc.get_age(),
+                   acc.get_gender(),
+                   acc.get_social_num(),
+                   acc.get_balance()]
+            new_acc.append(row)
+
+    with open(ACCOUNTS_CSV, 'w') as f:
+        csvwriter = csv.writer(f)
+        csvwriter.writerow(COLUMNS)
+        csvwriter.writerows(new_acc)
