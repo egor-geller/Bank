@@ -5,17 +5,17 @@ from log import save_to_log
 
 class Account(User):
 
-    def __init__(self, name, age, gender, social_num):
+    def __init__(self, name: str, age: int, gender: str, social_num: int):
         super().__init__(name, age, gender, social_num)
         self.__balance = 0
         self.__account_num = rd.randint(10_000, 99_999)
         save_to_log(f"New account {self.__account_num} has been created")
 
     def get_balance(self):
-        return self.__balance
+        return float(self.__balance)
 
     def get_account_num(self):
-        return self.__account_num
+        return int(self.__account_num)
 
     def set_account_num(self, account_num):
         self.__account_num = account_num
