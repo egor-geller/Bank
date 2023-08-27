@@ -10,6 +10,7 @@ class TestUtils(unittest.TestCase):
     existing_account = None
     new_account = None
     read_acc = None
+    new_account_id = None
 
     @classmethod
     def setUpClass(cls) -> None:
@@ -27,16 +28,17 @@ class TestUtils(unittest.TestCase):
         age = rd.randint(16, 121)
         social_num = rd.randint(100_000, 99_999_999)
         cls.new_account = Account(name, age, gender, social_num)
+        cls.new_account_id = cls.new_account.get_account_num()
 
         # Read one account
         cls.read_acc = read_account(69214)
 
     @classmethod
     def tearDownClass(cls) -> None:
+        delete_account(cls.new_account_id)
         cls.existing_account = None
         cls.new_account = None
         cls.read_acc = None
-        # TODO: delete account after saving
 
     def test_save_account(self):
         self.assertRaises(AccountExistsError, save_account, self.existing_account)
@@ -49,7 +51,7 @@ class TestUtils(unittest.TestCase):
 
     def test_read_account(self):
         self.assertRaises(AccountNotExistsError, read_account, 123)
-        expected_acc = AccountDto("72311", "John", "17", "male", "61187609", "200.0")
+        expected_acc = AccountDto(72311, "John", 17, "male", 61187609, 200.0)
         acc_id = self.existing_account.get_account_num()
         actual_acc = read_account(acc_id)
         self.assertEqual(actual_acc, expected_acc, expected_acc)
