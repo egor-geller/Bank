@@ -4,6 +4,7 @@ from Exceptions.AccountExistsError import AccountExistsError
 from Exceptions.AccountNotExistsError import AccountNotExistsError
 from account import Account
 from account_dto import AccountDto
+from log import save_to_log
 
 ACCOUNTS_CSV = 'accounts.csv'
 COLUMNS = ['AccountID', 'Name', 'Age', 'Gender', 'SocialNum', 'Balance']
@@ -52,11 +53,13 @@ def is_account_exists(account_id: int) -> bool:
                 continue
             if int(lines[0]) == account_id:
                 return True
+        save_to_log(f'Account {account_id} does not exists')
         return False
 
 
 def read_account(account_id: int) -> AccountDto:
     if not is_account_exists(account_id):
+        save_to_log(f'Account {account_id} does not exists')
         raise AccountNotExistsError(f'Account {account_id} does not exists')
 
     with open(ACCOUNTS_CSV, 'r') as f:
@@ -66,7 +69,9 @@ def read_account(account_id: int) -> AccountDto:
             if lines[0] == 'AccountID':
                 continue
             if int(lines[0]) == account_id:
-                return AccountDto(int(lines[0]), lines[1], int(lines[2]), lines[3], int(lines[4]), float(lines[5]))
+                acc = AccountDto(int(lines[0]), lines[1], int(lines[2]), lines[3], int(lines[4]), float(lines[5]))
+                save_to_log(f'Reading an account was successful {acc}')
+                return acc
 
 
 def save_balance(account):

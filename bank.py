@@ -27,6 +27,7 @@ def open_bank_account() -> None:
 def generate_accounts():
     try:
         number_of_accounts = int(input("How many accounts to generate? "))
+        save_to_log(f'open_bank_account() -> Generated {number_of_accounts} accounts')
         for i in range(number_of_accounts):
             if i < number_of_accounts // 2:
                 gender = 'male'
@@ -56,6 +57,7 @@ def manual_open_bank_account():
             return
         new_account = Account(name, age, gender, social_num)
         save_account(new_account)
+        save_to_log(f'open_bank_account() -> manually open bank account')
         print(new_account)
     except ValueError:
         print(f'ValueError: The input is not a number for age or social number\n')
@@ -99,6 +101,7 @@ def transfer_money(acc_from: int, acc_to: int, amount: float) -> None:
 
 def get_current_balance(account_id: int) -> float:
     acc = read_account(account_id)
+    save_to_log(f'Get current account {account_id} balance')
     return float(acc.get_balance())
 
 
@@ -106,11 +109,17 @@ def statistics():
     num = ""
     while num != 0:
         print("1. How much money is in the Bank")
+        print("2. Gender ratio")
+        print("3. Average age")
         print("To go back press 0")
         try:
             num = int(input("Enter a number: "))
             if num == 1:
                 current_money_in_bank()
+            elif num == 2:
+                gender_ratio()
+            elif num == 3:
+                avg_age()
         except ValueError:
             print(f'ValueError: The input is not a number\n')
             continue
@@ -120,6 +129,29 @@ def current_money_in_bank():
     all_accounts = read_all_accounts()
     money_in_the_bank = sum([float(m.get_balance()) for m in all_accounts])
     print(f"{money_in_the_bank:,.2f}$")
+    save_to_log(f'Current money in the bank {money_in_the_bank:,.2f}$')
+
+
+def gender_ratio():
+    all_accounts = read_all_accounts()
+    male = 0
+    female = 0
+    for p in all_accounts:
+        if p.get_gender() == 'male':
+            male += 1
+        else:
+            female += 1
+
+    print(f'Male female ratio is {(male / female):.2f}')
+    save_to_log(f'Male female ratio in the bank {(male / female):.2f}')
+
+
+def avg_age():
+    all_accounts = read_all_accounts()
+    sum_of_ages = sum([int(p.get_age()) for p in all_accounts])
+    total_people = len(all_accounts)
+    print(f'Average age is {(sum_of_ages / total_people):.2f}')
+    save_to_log(f'Average age in the bank is {(sum_of_ages / total_people):.2f}')
 
 
 def cash_withdraw():
